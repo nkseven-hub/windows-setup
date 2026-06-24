@@ -1,0 +1,120 @@
+# ============================================
+# ~/.gitconfig - ベース設定ファイル
+# ============================================
+
+[user]
+    # あなたの名前とメールアドレスに書き換えてください
+    name = Your Name
+    email = your-email@example.com
+    # GPG署名を使う場合は鍵IDを指定（任意）
+    # signingkey = YOUR_GPG_KEY_ID
+
+[core]
+    # 改行コードの扱い（Mac/Linuxは input、Windowsは true 推奨）
+    autocrlf = true
+    # ファイル名の大文字小文字を区別する
+    ignorecase = false
+    # デフォルトエディタ（お好みで code --wait / vim / nano など）
+    editor = code -wait
+    # 全リポジトリ共通の除外ファイル
+    excludesfile = ~/.gitignore_global
+    # ページャー（差分を見やすく。delta導入時は次行を有効化）
+    # pager = delta
+
+[init]
+    # 新規リポジトリのデフォルトブランチ名
+    defaultBranch = main
+
+[pull]
+    # pull時にmergeコミットを作らずrebaseする（履歴が綺麗）
+    rebase = true
+
+[push]
+    # 現在のブランチを同名のリモートブランチへpush
+    default = simple
+    # 初回push時に -u を自動設定
+    autoSetupRemote = true
+    # タグも一緒にpush（必要に応じて）
+    followTags = true
+
+[fetch]
+    # リモートで削除されたブランチを自動的に整理
+    prune = true
+    pruneTags = true
+
+[merge]
+    # コンフリクト時に「共通の祖先」も表示して解決しやすくする
+    conflictstyle = zdiff3
+    # fast-forward可能でもマージコミットを作るか（デフォルトのまま）
+    # ff = false
+
+[rebase]
+    # rebase時にローカルのstashを自動退避・復元
+    autoStash = true
+    # fixup/squashのコミットを自動整理
+    autoSquash = true
+
+[diff]
+    # 関数名などコンテキストを賢く表示
+    algorithm = histogram
+    # 名前変更を検出
+    renames = copies
+    # a/ b/ の代わりに見やすいラベルを使う
+    mnemonicPrefix = true
+
+[color]
+    # 出力に色を付ける
+    ui = auto
+
+[branch]
+    # ブランチ一覧を最終更新日順でソート
+    sort = -committerdate
+
+[tag]
+    # タグをバージョン番号順でソート
+    sort = version:refname
+
+[commit]
+    # コミット時に差分をエディタに表示
+    verbose = true
+    # GPG署名を常に行う場合は true（鍵設定が前提）
+    # gpgsign = true
+
+[rerere]
+    # 同じコンフリクトの解決を記録・再利用
+    enabled = true
+
+[help]
+    # コマンドのタイプミスを自動修正（1.0秒待って実行）
+    autocorrect = 10
+
+# ============================================
+# エイリアス（よく使うコマンドの短縮形）
+# ============================================
+[alias]
+    st = status -sb
+    co = checkout
+    br = branch
+    ci = commit
+    cm = commit -m
+    amend = commit --amend --no-edit
+    unstage = reset HEAD --
+    undo = reset --soft HEAD~1
+    last = log -1 HEAD
+    # 見やすいグラフ付きログ
+    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+    # 全ブランチのグラフ
+    lga = log --graph --all --abbrev-commit --decorate --oneline
+    # 直近の変更ファイル一覧
+    files = diff --name-only
+    # 退避したstashを一覧
+    sl = stash list
+    # ブランチを最終更新日順で表示
+    recent = branch --sort=-committerdate
+
+# ============================================
+# URL書き換え（任意）
+# 例: GitHubをHTTPSではなくSSHで使う
+# ============================================
+# [url "git@github.com:"]
+#     insteadOf = https://github.com/
