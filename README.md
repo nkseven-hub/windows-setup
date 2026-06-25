@@ -6,8 +6,8 @@ ChocolateyとScoopでWindows環境を再現するためのリポジトリ。
 ## セットアップ手順
 
 ### 1. リポジトリを取得
-git clone https://github.com/<you>/windows-setup.git
-cd windows-setup
+$url = "https://raw.githubusercontent.com/nkseven-hub/windows-setup/main/bootstrap-fetch.ps1"
+irm $url | iex
 
 ### 2. 管理者パート（Chocolatey系・OS設定）
 PowerShellを「管理者として実行」で開き:
