@@ -9,7 +9,9 @@ $config = Join-Path $PSScriptRoot "..\config"
 # %PROGRAMDATA%      → C:\ProgramData                    (全ユーザー共通設定)
 $links = @(
     @{ Source = "$config\git\.gitconfig";
-       Target = "$env:USERPROFILE\.gitconfig" }
+       Target = "$env:USERPROFILE\.gitconfig" },
+    @{ Source = "$config\nvim\init.vim";
+       Target = "$env:LOCALAPPDATA\nvim\init.vim" }
 )
 
 foreach ($l in $links) {
@@ -32,7 +34,9 @@ foreach ($l in $links) {
         New-Item -ItemType SymbolicLink -Path $l.Target -Target $l.Source -Force | Out-Null
         Write-Host "  リンク作成: $($l.Target)"
     } catch {
-        Write-Warning "  リンク失敗(開発者モード未有効?): $($l.Target) — コピーで代替します"
+        Write-Warning "  リンク失敗: $($l.Target)"
+        Write-Warning "    理由: $($_.Exception.Message)"
+        Write-Warning "    → コピーで代替します(開発者モードを有効化後に再実行するとリンクになります)"
         Copy-Item $l.Source $l.Target -Force
     }
 }
