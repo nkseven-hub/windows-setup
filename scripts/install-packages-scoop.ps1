@@ -4,17 +4,31 @@ $dir        = Join-Path $PSScriptRoot "..\packages\scoop"
 $bucketList = Join-Path $dir "buckets.txt"
 $scoopFile  = Join-Path $dir "scoopfile.json"
 
-# 追加 bucket
 if (Test-Path $bucketList) {
     Write-Host "[scoop] bucket を追加します..."
     $existing = (scoop bucket list).Name
-    Get-Content $bucketList | Where-Object { $_ -and ($_ -notmatch '^\s*#') } | ForEach-Object {
-        $name = $_.Trim()
-        if ($existing -notcontains $name) {
-            Write-Host "  + $name"
-            scoop bucket add $name
+
+    Get-Content $bucketList | ForEach-Object {
+        $line = $_.Trim()
+        # 空行・コメント行はスキップ
+        if (-not $line -or $line.StartsWith('#')) { return }
+
+        # 「名前」と「URL(任意)」をスペースで分割
+        $parts = $line -split '\s+', 2
+        $name  = $parts[0]
+        $url   = if ($parts.Count -gt 1) { $parts[1] } else { $null }
+
+        if ($existing -contains $name) {
+            Write-Host "  = $name (既存、スキップ)"
+            return
+        }
+
+        if ($url) {
+            Write-Host "  + $name  <$url>"
+            scoop bucket add $name $url
         } else {
-            Write-Host "  = $name (既存)"
+            Write-Host "  + $name (公式)"
+            scoop bucket add $name
         }
     }
 }

@@ -1,2 +1,5 @@
 extras
 versions
+
+# 自作bucket(名前 URL の形式で書く)
+mybucket https://github.com/nkseven-hub/scoop-mybucket

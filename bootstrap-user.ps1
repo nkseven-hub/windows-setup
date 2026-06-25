@@ -20,6 +20,7 @@ Write-Host "=== [USER] セットアップ開始 ===" -ForegroundColor Cyan
 & "$root\scripts\install-packages-scoop.ps1"
 & "$root\scripts\apply-dotfiles.ps1"
 & "$root\scripts\setup-plugins.ps1"
+& "$root\scripts\setup-startup.ps1"
 
 Write-Host ""
 Write-Host "=== [USER] 完了 ===" -ForegroundColor Green
