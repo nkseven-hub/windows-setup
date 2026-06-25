@@ -17,6 +17,7 @@ if ($isAdmin) {
 Write-Host "=== [USER] セットアップ開始 ===" -ForegroundColor Cyan
 
 & "$root\scripts\install-scoop.ps1"
+& "$root\scripts\setup-ssh-github.ps1"
 & "$root\scripts\install-packages-scoop.ps1"
 & "$root\scripts\apply-dotfiles.ps1"
 & "$root\scripts\setup-plugins.ps1"
