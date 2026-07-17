@@ -12,6 +12,8 @@ $links = @(
        Target = "$env:USERPROFILE\.gitconfig" },
     @{ Source = "$config\nvim\init.vim";
        Target = "$env:LOCALAPPDATA\nvim\init.vim" }
+    @{ Source = "$config\vscode\markdown-preview-enhanced\style.less";
+       Target = "$env:USERPROFILE\.crossnote\style.less" }
 )
 
 foreach ($l in $links) {
